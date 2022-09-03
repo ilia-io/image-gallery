@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
+
+$primary: #21a179;
+$secondary: #006989;
+$text: #a80154;
+$alt-text: #acbea3;
+$back: #fff;
+$border: #000;
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,3 +19,82 @@ body {
   box-sizing: border-box;
 }
 
+.App {
+  padding: 50px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+h1 {
+  font-family: "Merriweather", serif;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    padding: 12px 18px;
+    background-color: $back;
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 1px solid transparent;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      border-color: $border;
+      transform: scale(1.05) rotate(1deg);
+    }
+
+    &.active {
+      background-color: $border;
+      color: $back;
+    }
+  }
+}
+
+.search-input {
+  font-size: 16px;
+  width: 200px;
+  height: 50px;
+  padding: 0 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  transition: all 0.15s ease-in-out;
+
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+  }
+}
+
+.pagination {
+  list-style: none;
+  padding: 0;
+  margin-top: 40px;
+
+  li {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: $back;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-right: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    &.active {
+      background-color: $border;
+      color: $back;
+    }
+  }
+}
