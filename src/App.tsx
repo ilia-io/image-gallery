@@ -1,7 +1,28 @@
-import collectionsJson from './assets/collections.json';
+import { useEffect, useState } from 'react';
 import Collection from './components/Collection/Collection';
 
+type TItem = {
+  name: string;
+  photos: string[];
+};
+
 const App: React.FC = () => {
+  const [collections, setCollections] = useState([]);
+
+  useEffect(() => {
+    const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections`;
+
+    fetch(API_LINK)
+      .then((res) => res.json())
+      .then((json) => {
+        setCollections(json);
+      })
+      .catch((error) => {
+        console.warn(error);
+        alert('Ошибка при получении данных');
+      })
+  }, []);
+
   return (
     <div className="App">
       <h1>Моя коллекция фотографий</h1>
@@ -16,15 +37,9 @@ const App: React.FC = () => {
         <input className="search-input" placeholder="Поиск по названию" />
       </header>
       <main className="content">
-        <Collection
-          name="Путешествие по миру"
-          images={[
-            'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGNpdHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-            'https://images.unsplash.com/photo-1560840067-ddcaeb7831d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGNpdHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-            'https://images.unsplash.com/photo-1531219572328-a0171b4448a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fGNpdHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-            'https://images.unsplash.com/photo-1573108724029-4c46571d6490?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGNpdHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-          ]}
-        />
+        {collections.map((item: TItem, index: number) => (
+          <Collection key={index} name={item.name} images={item.photos} />
+        ))}
       </main>
       <ul className="pagination">
         <li>1</li>
