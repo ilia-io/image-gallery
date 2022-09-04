@@ -8,6 +8,7 @@ type TItem = {
 
 const App: React.FC = () => {
   const [collections, setCollections] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections`;
@@ -20,8 +21,12 @@ const App: React.FC = () => {
       .catch((error) => {
         console.warn(error);
         alert('Ошибка при получении данных');
-      })
+      });
   }, []);
+
+  const onChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
 
   return (
     <div className="App">
@@ -34,12 +39,21 @@ const App: React.FC = () => {
           <li>Архитектура</li>
           <li>Города</li>
         </ul>
-        <input className="search-input" placeholder="Поиск по названию" />
+        <input
+          className="search-input"
+          placeholder="Поиск по названию"
+          value={searchValue}
+          onChange={onChangeSearchValue}
+        />
       </header>
       <main className="content">
-        {collections.map((item: TItem, index: number) => (
-          <Collection key={index} name={item.name} images={item.photos} />
-        ))}
+        {collections
+          .filter((item: TItem) =>
+            item.name.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((item: TItem, index: number) => (
+            <Collection key={index} name={item.name} images={item.photos} />
+          ))}
       </main>
       <ul className="pagination">
         <li>1</li>
