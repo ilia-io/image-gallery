@@ -6,12 +6,22 @@ type TItem = {
   photos: string[];
 };
 
+const categories = [
+  { name: 'Все' },
+  { name: 'Море' },
+  { name: 'Горы' },
+  { name: 'Архитектура' },
+  { name: 'Города' },
+];
+
 const App: React.FC = () => {
   const [collections, setCollections] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [categoryID, setCategoryID] = useState(0);
 
   useEffect(() => {
-    const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections`;
+    const category = categoryID ? `category=${categoryID}` : '';
+    const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections?${category}`;
 
     fetch(API_LINK)
       .then((res) => res.json())
@@ -22,10 +32,14 @@ const App: React.FC = () => {
         console.warn(error);
         alert('Ошибка при получении данных');
       });
-  }, []);
+  }, [categoryID]);
 
   const onChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
+  };
+
+  const onClickCategory = (index: number) => {
+    setCategoryID(index);
   };
 
   return (
@@ -33,11 +47,15 @@ const App: React.FC = () => {
       <h1>Моя коллекция фотографий</h1>
       <header className="top">
         <ul className="tags">
-          <li className="active">Все</li>
-          <li>Горы</li>
-          <li>Море</li>
-          <li>Архитектура</li>
-          <li>Города</li>
+          {categories.map((item, index) => (
+            <li
+              key={index}
+              className={categoryID === index ? 'active' : ''}
+              onClick={() => onClickCategory(index)}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
         <input
           className="search-input"
