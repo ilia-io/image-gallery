@@ -19,11 +19,12 @@ const App: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [categoryID, setCategoryID] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setIsLoading(true);
     const category = categoryID ? `category=${categoryID}` : '';
-    const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections?${category}`;
+    const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections?page=${page}&limit=3&${category}`;
 
     fetch(API_LINK)
       .then((res) => res.json())
@@ -35,7 +36,7 @@ const App: React.FC = () => {
         alert('Ошибка при получении данных');
       })
       .finally(() => setIsLoading(false));
-  }, [categoryID]);
+  }, [categoryID, page]);
 
   const onChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -43,6 +44,7 @@ const App: React.FC = () => {
 
   const onClickCategory = (index: number) => {
     setCategoryID(index);
+    setPage(1);
   };
 
   return (
@@ -81,9 +83,15 @@ const App: React.FC = () => {
           ))}
       </main>
       <ul className="pagination">
-        <li>1</li>
-        <li className="active">2</li>
-        <li>3</li>
+        {[...Array(5)].map((_, index) => (
+          <li
+            className={page === index + 1 ? 'active' : ''}
+            onClick={() => setPage(index + 1)}
+            key={index}
+          >
+            {index + 1}
+          </li>
+        ))}
       </ul>
     </div>
   );
