@@ -52,19 +52,15 @@ const App: React.FC = () => {
       <h1>Моя коллекция фотографий</h1>
       <header className="top">
         <ul className="tags">
-          {isLoading ? (
-            <h2>Идет загрузка...</h2>
-          ) : (
-            categories.map((item, index) => (
-              <li
-                key={index}
-                className={categoryID === index ? 'active' : ''}
-                onClick={() => onClickCategory(index)}
-              >
-                {item.name}
-              </li>
-            ))
-          )}
+          {categories.map((item, index) => (
+            <li
+              key={index}
+              className={categoryID === index ? 'active' : ''}
+              onClick={() => onClickCategory(index)}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
         <input
           className="search-input"
@@ -74,13 +70,17 @@ const App: React.FC = () => {
         />
       </header>
       <main className="content">
-        {collections
-          .filter((item: TItem) =>
-            item.name.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item: TItem, index: number) => (
-            <Collection key={index} name={item.name} images={item.photos} />
-          ))}
+        {isLoading ? (
+          <h2>Идет загрузка...</h2>
+        ) : (
+          collections
+            .filter((item: TItem) =>
+              item.name.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item: TItem, index: number) => (
+              <Collection key={index} name={item.name} images={item.photos} />
+            ))
+        )}
       </main>
       <ul className="pagination">
         {[...Array(5)].map((_, index) => (
