@@ -18,8 +18,10 @@ const App: React.FC = () => {
   const [collections, setCollections] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [categoryID, setCategoryID] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const category = categoryID ? `category=${categoryID}` : '';
     const API_LINK = `https://6308f3a2f8a20183f76c214f.mockapi.io/collections?${category}`;
 
@@ -31,7 +33,8 @@ const App: React.FC = () => {
       .catch((error) => {
         console.warn(error);
         alert('Ошибка при получении данных');
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [categoryID]);
 
   const onChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,15 +50,19 @@ const App: React.FC = () => {
       <h1>Моя коллекция фотографий</h1>
       <header className="top">
         <ul className="tags">
-          {categories.map((item, index) => (
-            <li
-              key={index}
-              className={categoryID === index ? 'active' : ''}
-              onClick={() => onClickCategory(index)}
-            >
-              {item.name}
-            </li>
-          ))}
+          {isLoading ? (
+            <h2>Идет загрузка...</h2>
+          ) : (
+            categories.map((item, index) => (
+              <li
+                key={index}
+                className={categoryID === index ? 'active' : ''}
+                onClick={() => onClickCategory(index)}
+              >
+                {item.name}
+              </li>
+            ))
+          )}
         </ul>
         <input
           className="search-input"
