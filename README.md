@@ -1,11 +1,10 @@
-# 📷 Фото галерея
+# 🎉 Квиз - мини-викторина
 
-## 👉 Ссылка на [деплой](https://image-gallery-zeta-three.vercel.app/)
+## 👉 Ссылка на [деплой](https://quiz-khaki-three.vercel.app/)
 
 ### 🛠️ Технологии:
 
 - **TypeScript**
 - **React**
-- Mock API
-- React Hooks
-- CSS-Modules / SCSS
+- React Hooks 
+- SCSS
