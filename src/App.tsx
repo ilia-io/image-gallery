@@ -83,7 +83,7 @@ const App: React.FC = () => {
         )}
       </main>
       <ul className="pagination">
-        {[...Array(5)].map((_, index) => (
+        {[...Array(4)].map((_, index) => (
           <li
             className={page === index + 1 ? 'active' : ''}
             onClick={() => setPage(index + 1)}
